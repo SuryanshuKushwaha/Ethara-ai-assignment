@@ -19,3 +19,4 @@ BACKEND_HOST = os.getenv("BACKEND_HOST", "0.0.0.0")
 BACKEND_PORT = int(os.getenv("BACKEND_PORT", "8000"))
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:4173")
+FRONTEND_URLS = [url.strip() for url in FRONTEND_URL.split(",") if url.strip()]

@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from app import crud, schemas, models
 from app.database import engine, get_db, SessionLocal
-from app.config import FRONTEND_URL
+from app.config import FRONTEND_URLS
 from app.seed import seed_initial_data
 
 models.Base.metadata.create_all(bind=engine)
@@ -31,7 +31,7 @@ def root():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL, "http://localhost:4173"],
+    allow_origins=FRONTEND_URLS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
