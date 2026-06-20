@@ -101,6 +101,13 @@ def delete_customer(db: Session, customer_id: int):
     customer = get_customer(db, customer_id)
     if not customer:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found")
+
+    if customer.orders:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Cannot delete customer because they have existing orders.",
+        )
+
     db.delete(customer)
     db.commit()
     return customer
