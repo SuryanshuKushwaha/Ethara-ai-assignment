@@ -58,6 +58,13 @@ def delete_product(db: Session, product_id: int):
     product = get_product(db, product_id)
     if not product:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+
+    if product.order_items:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Cannot delete product that is part of existing orders.",
+        )
+
     db.delete(product)
     db.commit()
     return product
