@@ -62,7 +62,7 @@ def delete_product(db: Session, product_id: int):
     if product.order_items:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Cannot delete product that is part of existing orders.",
+            detail="Unable to delete product. It is referenced by existing orders.",
         )
 
     db.delete(product)
@@ -105,7 +105,7 @@ def delete_customer(db: Session, customer_id: int):
     if customer.orders:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Cannot delete customer because they have existing orders.",
+            detail="Unable to delete customer. They have existing orders.",
         )
 
     db.delete(customer)
